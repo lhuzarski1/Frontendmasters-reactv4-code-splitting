@@ -1,14 +1,18 @@
 import { render } from "react-dom";
-import SearchParams from "./SearchParams";
+// import SearchParams from "./SearchParams";
 import { StrictMode, useState, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 // import Details from "./Details";
-// import ThemeContext from "./ThemeContext";
+import ThemeContext from "./ThemeContext";
+
+const Details = lazy(() => import('./Details'))
+const SearchParams = lazy(() => import('./SearchParams'))
 
 const App = () => {
   const theme = useState("darkblue");
   return (
     <StrictMode>
+      <Suspense fallback={<h2>loading...</h2>}>
       <ThemeContext.Provider value={theme}>
         <BrowserRouter>
           <header>
@@ -20,6 +24,7 @@ const App = () => {
           </Routes>
         </BrowserRouter>
       </ThemeContext.Provider>
+      </Suspense>
     </StrictMode>
   );
 };
